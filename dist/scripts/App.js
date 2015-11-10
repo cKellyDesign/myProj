@@ -73,22 +73,22 @@ App.controller('mainController', function($scope, $rootScope, $http){
 
   $scope.metricsClick = function(i){ 
     var thisBuild = $rootScope.buildList[i]
-    console.log("Metrics Information for " + thisBuild.type + " \"" + thisBuild.name + "\" - ", thisBuild.buildData.metrics);
+    console.log("\nMetrics Information for " + thisBuild.type + " \"" + thisBuild.name + "\" - ", thisBuild.buildData.metrics);
   };
 
   $scope.buildClick = function(i){ 
     var thisBuild = $rootScope.buildList[i]
-    console.log("Build Information for " + thisBuild.type + " \"" + thisBuild.name + "\" - ", thisBuild.buildData.build);
+    console.log("\nBuild Information for " + thisBuild.type + " \"" + thisBuild.name + "\" - ", thisBuild.buildData.build);
   };
 
   $scope.unitTestClick = function(i){ 
     var thisBuild = $rootScope.buildList[i]
-    console.log("Unit Test Information for " + thisBuild.type + " \"" + thisBuild.name + "\" - ", thisBuild.buildData.unitTest);
+    console.log("\nUnit Test Information for " + thisBuild.type + " \"" + thisBuild.name + "\" - ", thisBuild.buildData.unitTest);
   };
 
   $scope.funcTestClick = function(i){ 
     var thisBuild = $rootScope.buildList[i]
-    console.log("Functionality Test Information for " + thisBuild.type + " \"" + thisBuild.name + "\" - ", thisBuild.buildData.functionalTest);
+    console.log("\nFunctionality Test Information for " + thisBuild.type + " \"" + thisBuild.name + "\" - ", thisBuild.buildData.functionalTest);
   };
 });
 
