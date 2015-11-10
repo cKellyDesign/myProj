@@ -1,0 +1,43 @@
+// Gradient Mixin - limited for this example, more robust options included in Compass
+@mixin gradient($gradColor) {
+
+  $rgbaStartColor: rgba($gradColor, 0.1);
+  $rgbaEndColor: rgba($gradColor, 0);
+  $strColor: inspect($gradColor);
+  $ie8StartColor: quote(str-insert($strColor, "1a", 2));
+  $ie8EndColor: quote(str-insert($strColor, "00", 2));
+
+  background: -moz-linear-gradient(-45deg,  $rgbaStartColor 0%, $rgbaEndColor 50%, $rgbaEndColor 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,$rgbaStartColor), color-stop(50%,$rgbaEndColor), color-stop(100%,$rgbaEndColor)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(-45deg,  $rgbaStartColor 0%,$rgbaEndColor 50%,$rgbaEndColor 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(-45deg,  $rgbaStartColor 0%,$rgbaEndColor 50%,$rgbaEndColor 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(-45deg,  $rgbaStartColor 0%,$rgbaEndColor 50%,$rgbaEndColor 100%); /* IE10+ */
+  background: linear-gradient(135deg,  $rgbaStartColor 0%,$rgbaEndColor 50%,$rgbaEndColor 100%); /* W3C */
+
+  .lt-ie9 & {
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=#{$ie8StartColor}, endColorstr=#{$ie8EndColor},GradientType=1 ); /* IE6-8 fallback on horizontal gradient */
+  }
+}
+
+// Prefix Mixin
+@mixin prefix($property, $value) {
+  -webkit-#{$property}: $value;
+     -moz-#{$property}: $value;
+      -ms-#{$property}: $value;
+          #{$property}: $value;
+}
+
+// Breakpoint Mixin
+@mixin breakpoint($bpSize, $bpMax:"") {
+  @if $bpMax != "" and type-of($bpMax) == 'number' {
+    @media only screen and (min-width: $bpSize) and (max-width: $bpMax) { @content; }
+  }
+  @else if $bpMax != "" and type-of($bpMax) == 'string' {
+    @if $bpMax == "max-width" {
+      @media only screen and (max-width: $bpSize) { @content; }
+    }
+  }
+  @else {
+    @media only screen and (min-width: $bpSize) { @content; }
+  }
+}

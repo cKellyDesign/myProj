@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!--[if lt IE 8]><html class="lt-ie9 lt-ie8"><![endif]-->
+<!--[if IE 8]><html class="lt-ie9"><![endif]-->
+<!--[if IE 9]><html class="lt-ie10"><![endif]-->
+<!--[if gt IE 9]><!-->
+<html lang="en">
+<!--<![endif]-->
+<head>
+  <title>Sr Front End Dev Position Test Project</title>
+  <!--[if IE 8]><script type="text/javascript" src="js/html5shim.js"></script><![endif]-->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body ng-app="App">
+  <main ng-controller="mainController">
+
+    <ol class="buildList">
+        <!-- Header Row -->
+        <li>
+          <ul class="table_heading row">
+            <li class="col-xs-2 text-left cell">Changelist / Build</li>
+            <li class="col-xs-2 cell">Owner</li>
+            <li class="col-xs-2 cell">Time Started</li>
+            <li class="col-xs-2 cell">State</li>
+            <li class="col-xs-1 cell">Metrics</li>
+            <li class="col-xs-1 cell">Build</li>
+            <li class="col-xs-1 cell">Unit Test</li>
+            <li class="col-xs-1 cell">Functional Test</li>
+          </ul>
+        </li>
+
+        <!-- Repeating Build / Firewall Directive -->
+        <li ng-repeat="build in $root.buildList" 
+            build-row 
+            ng-model="build" 
+            ng-click="onRowClick($index)"
+            class="ng-class: build.state; buildRow"></li>
+      </ol>
+  </main>
+
+  <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+  <script type="text/javascript" src="js/angular.min.js"></script>
+  <script type="text/javascript" src="js/Chart.js"></script>
+  <script type="text/javascript" src="js/App.js"></script>
+</body>
+</html>  

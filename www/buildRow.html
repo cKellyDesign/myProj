@@ -1,0 +1,187 @@
+<ul class="row" ng-class="build.expanded ? 'expanded' : ''">
+  <div class="icon_wrapper">
+    <img class="icon_img" ng-src="/img/{{build.type}}_{{build.state}}.png">
+  </div>
+  <li class="col-xs-2 cell text-left build_name">{{build.name}}</li>
+  <li class="col-xs-2 cell">{{build.owner}}</li>
+  <li class="col-xs-2 cell">{{timeStarted}}</li>
+  <li class="col-xs-2 cell">{{build.state}}</li>
+  <li class="col-xs-1 cell">
+      <div class="ng-class: build.metricsstate; statusBox"></div>
+  </li>
+  <li class="col-xs-1 cell">
+      <div class="ng-class: build.buildstate; statusBox"></div>
+  </li>
+  <li class="col-xs-1 cell">
+      <div class="ng-class: build.unitstate; statusBox"></div>
+  </li>
+  <li class="col-xs-1 cell">
+      <div class="ng-class: build.functionalstate; statusBox"></div>
+  </li>
+</ul>
+
+<!-- Details of the build / firewall revealed when row is expanded -->
+<article ng-show="build.expanded" class="buildDetails container-fluid">
+
+  <!-- Metrics Box Start -->
+  <div class="ng-class: build.buildData.metrics.state; col-xs-12 col-sm-6 col-md-2 metrics cont">
+    <div class="wrap">
+      <div class="box"  ng-click="metricsClick($index)">
+        <h5>Metrics</h5> 
+        <div class="row">
+          <div class="col-xs-6">
+            <div class="arrow_wrapper">
+              <img class="metricsArrow" ng-src="/img/arrow_{{ build.buildData.metrics.test > 50 ? 'pass' : 'fail' }}.png">
+              <span class="arrowPercent">{{build.buildData.metrics.test}}</span>
+            </div>
+            <span class="metric_label">Test</span>
+          </div>
+          <div class="col-xs-6">
+            <div class="arrow_wrapper">
+              <img class="metricsArrow" ng-src="/img/arrow_{{ build.buildData.metrics.maintainability > 50 ? 'pass' : 'fail' }}.png">
+              <span class="arrowPercent">{{build.buildData.metrics.maintainability}}</span>
+            </div>
+            <span class="metric_label">Maintainability</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6">
+            <div class="arrow_wrapper">
+              <img class="metricsArrow" src="/img/arrow_next.png">
+              <span class="arrowPercent next">{{build.buildData.metrics.security}}</span>
+            </div>
+            <span class="metric_label">Security</span>
+          </div>
+          <div class="col-xs-6">
+            <div class="arrow_wrapper">
+              <img class="metricsArrow" src="/img/arrow_next.png">
+              <span class="arrowPercent next">{{build.buildData.metrics.workmanship}}</span>
+            </div>
+            <span class="metric_label">Workmanship</span>
+          </div>
+        </div>  
+      </div>
+    </div>
+  </div>
+  <!-- Metrics Box End -->
+
+  <!-- Build Box Start -->
+  <div class="ng-class: build.buildData.build.state; col-xs-12 col-sm-6 col-md-2 build cont">
+    <div class="wrap">
+      <div class="box" ng-click="buildClick($index)">
+        <h5>Build</h5>
+        <div class="row">
+          <div class="col-xs-6">
+            <div class="buildBranchWrap">
+              <img class="buildComputer" src="/img/build_branch.png">
+              <span class="buildBranchName">{{build.buildData.build.fromBranch}}</span>
+            </div>
+          </div>
+          <div class="col-xs-6">
+            <div class="buildBranchWrap">
+              <img class="buildComputer" src="/img/build_branch.png">
+              <span class="buildBranchName">{{build.buildData.build.toBranch}}</span>
+            </div>
+          </div>
+          <div class="col-xs-12">{{build.buildData.build.finishTime}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Build Box End -->
+
+  <!-- Unit Test Box Start -->
+  <div class="ng-class: build.buildData.unitTest.state; col-xs-12 col-sm-6 col-md-3 unitTest cont">
+    <div class="wrap">
+      <div class="box" ng-click="unitTestClick($index)">
+        <h5>Unit Test</h5>
+        <div class="row">
+          <div class="col-xs-8 chart">
+            <div class="unitTest_chart">
+              <canvas class="chart_canv"></canvas>
+              <div class="covered_bar_out">
+                <div class="covered_bar_in" ng-style="{ right: (100 - unitTestsPassed) + '%' }"></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-4 percent_result">
+            <span class="pie_percent" ng-class="{ warn: unitTestsPassed < 70, fail: unitTestsPassed < 50 }">{{unitTestsPassed}}%</span>
+            <span class="percent_label">tests passed</span>
+          </div>
+          <div class="col-xs-12">
+            <div class="covered_bar_out">
+              <div class="covered_bar_in" ng-style="{ right: (100 - build.buildData.unitTest.coveragePercentage) + '%' }"></div>
+              <span class="covered_bar_text">{{build.buildData.unitTest.coveragePercentage}}% Code Covered</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Unit Test Box Start -->
+
+  <!-- Functional Test Box Start -->
+  <div class="ng-class: build.buildData.functionalTest.state; col-xs-12 col-sm-6 col-md-3 functional cont">
+    <div class="wrap">
+      <div class="box" ng-click="funcTestClick($index)">
+        <h5>Functional Test</h5>
+        <div class="row">
+          <div class="col-xs-8 chart">
+            <div class="functionalTest_chart">
+              <canvas class="chart_canv"></canvas>
+              <div class="covered_bar_out">
+                <div class="covered_bar_in" ng-style="{ right: (100 - funcTestsPassed) + '%' }"></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-4 percent_result">
+            <span class="pie_percent" ng-class="{ warn: funcTestsPassed < 70, fail: funcTestsPassed < 50 }">{{funcTestsPassed}}%</span>
+            <span class="percent_label">tests passed</span>
+          </div>
+          <div class="col-xs-12">
+            <div class="covered_bar_out">
+              <div class="covered_bar_in" ng-style="{ right: (100 - build.buildData.functionalTest.coveragePercentage) + '%' }"></div>
+              <span class="covered_bar_text">{{build.buildData.functionalTest.coveragePercentage}}% Code Covered</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Functional Test Box End -->
+
+  <!-- Results Space Start -->
+  <div class="col-xs-12 col-sm-6 col-md-2 results cont">
+    <h4>Result:</h4>
+
+    <div class="firewall_result" ng-show="build.type === 'Firewall'">
+      <div class="firewall_pass" ng-show="build.state === 'Complete'">
+        <h5>Change Accepted</h5>
+        <h2>Auto-merged</h2>
+        <button class="merge_build_btn">Merged Build</button>
+      </div>
+
+      <div class="firewall_fail" ng-show="build.state === 'Rejected'">
+        <h5>Change Rejected</h5>
+        <h2>{{build.buildData.failReason}}</h2>
+        <button class="find_issues_btn">Find Issues</button>
+      </div>
+    </div>
+
+    <div class="build_result" ng-show="build.type === 'Build'">
+      <div class="build_pass" ng-show="build.state === 'Complete'">
+        <h2>Complete</h2>
+        <button class="deploy_btn">Deploy</button>
+        <span> to: </span>
+        <select class="deploy_select" ng-model="branch" ng-options="branch for branch in branches"></select>
+      </div>
+
+      <div class="build_fail" ng-show="build.state === 'Rejected'"></div>
+    </div>
+  </div>
+  <!-- Results Space End -->
+
+  <div class="pendingMessage">
+    <h2>Waiting for Results</h2>
+  </div>
+</article>

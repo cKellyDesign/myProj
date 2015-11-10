@@ -1,0 +1,20 @@
+// Normalization styling
+ol, ul {
+  list-style: none;
+  margin-left: 0;
+  padding-left: 0;
+}
+main {
+  padding: 20px;
+}
+body {
+  font-family: Trebuchet, Arial, sans-serif !important;
+}
+
+// Common basic button styling
+button {
+  background-color: $blue;
+  border: 1px solid $greyLight;
+  color: white;
+  padding: 6px 8px;
+}
