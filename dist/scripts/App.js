@@ -47,10 +47,11 @@ App.controller('mainController', function($scope, $rootScope, $http){
   $scope.expandedRow = NaN;
   
   $scope.onRowClick = function(i) {
+    // if ( $rootScope.buildList[$scope.expandedRow] ) {
+      $rootScope.buildList[i].expanded = false; 
+    // }
     if ( $scope.expandedRow === i ) {
       return;
-    } else if ( $scope.expandedRow >= 0 ) {
-      $rootScope.buildList[$scope.expandedRow].expanded = false;
     }
 
     $scope.expandedRow = i;
